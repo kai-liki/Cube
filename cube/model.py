@@ -67,92 +67,89 @@ L_ = -4
 U_ = -5
 D_ = -6
 
+# Direction axis mapping
+DirectionToAxis = {
+    # Direction : Axis, Axis position, Direction, (Other 2 axis), [Edge position list], [Corner position list]
+    F: (Z, 1, F, (X, Y), [(X1, Y2), (X2, Y3), (X3, Y2), (X2, Y1)], [(X1, Y3), (X3, Y3), (X3, Y1), (X1, Y1)]),
+    B: (Z, 3, B, (X, Y), [(X2, Y1), (X3, Y2), (X2, Y3), (X1, Y2)], [(X1, Y1), (X3, Y1), (X3, Y3), (X1, Y3)]),
+    L: (X, 1, L, (Y, Z), [(Y2, Z1), (Y1, Z2), (Y2, Z3), (Y3, Z2)], [(Y1, Z1), (Y1, Z3), (Y3, Z3), (Y3, Z1)]),
+    R: (X, 3, R, (Y, Z), [(Y2, Z1), (Y3, Z2), (Y2, Z3), (Y1, Z2)], [(Y1, Z1), (Y3, Z1), (Y3, Z3), (Y1, Z3)]),
+    D: (Y, 1, D, (X, Z), [(X2, Z1), (X3, Z2), (X2, Z3), (X1, Z2)], [(X1, Z1), (X3, Z1), (X3, Z3), (X1, Z3)]),
+    U: (Y, 3, U, (X, Z), [(X2, Z1), (X1, Z2), (X2, Z3), (X3, Z2)], [(X1, Z1), (X1, Z3), (X3, Z3), (X3, Z1)]),
+    F_: (Z, 1, F_, (X, Y), [(X2, Y1), (X3, Y2), (X2, Y3), (X1, Y2)], [(X1, Y1), (X3, Y1), (X3, Y3), (X1, Y3)]),
+    R_: (X, 3, R_, (Y, Z), [(Y2, Z1), (Y1, Z2), (Y2, Z3), (Y3, Z2)], [(Y1, Z1), (Y1, Z3), (Y3, Z3), (Y3, Z1)]),
+    B_: (Z, 3, B_, (X, Y), [(X1, Y2), (X2, Y3), (X3, Y2), (X2, Y1)], [(X1, Y3), (X3, Y3), (X3, Y1), (X1, Y1)]),
+    L_: (X, 1, L_, (Y, Z), [(Y2, Z1), (Y3, Z2), (Y2, Z3), (Y1, Z2)], [(Y1, Z1), (Y3, Z1), (Y3, Z3), (Y1, Z3)]),
+    D_: (Y, 1, D_, (X, Z), [(X2, Z1), (X1, Z2), (X2, Z3), (X3, Z2)], [(X1, Z1), (X1, Z3), (X3, Z3), (X3, Z1)]),
+    U_: (Y, 3, U_, (X, Z), [(X2, Z1), (X3, Z2), (X2, Z3), (X1, Z2)], [(X1, Z1), (X3, Z1), (X3, Z3), (X1, Z3)]),
+}
+
 EDGE_ROTATE_XY = {
-    (X1, Y2):(Y2, X1),
-    (X2, Y1):(X3, Y2),
-    (X3, Y2):(X2, Y3),
-    (X2, Y3):(X1, Y2)
+    (X1, Y2): (Y2, X1),
+    (X2, Y1): (X3, Y2),
+    (X3, Y2): (X2, Y3),
+    (X2, Y3): (X1, Y2)
 }
 
 EDGE_ROTATE_YX = {
-    (X2, Y1):(X1, Y2),
-    (X3, Y2):(X2, Y1),
-    (X2, Y3):(X3, Y2),
-    (X1, Y2):(X2, Y3)
+    (X2, Y1): (X1, Y2),
+    (X3, Y2): (X2, Y1),
+    (X2, Y3): (X3, Y2),
+    (X1, Y2): (X2, Y3)
 }
 
 EDGE_ROTATE_YZ = {
-    (Y1, Z2):(Y2, Z1),
-    (Y2, Z1):(Y3, Z2),
-    (Y3, Z2):(Y2, Z3),
-    (Y2, Z3):(Y1, Z2)
+    (Y1, Z2): (Y2, Z1),
+    (Y2, Z1): (Y3, Z2),
+    (Y3, Z2): (Y2, Z3),
+    (Y2, Z3): (Y1, Z2)
 }
 
 EDGE_ROTATE_ZY = {
-    (Y2, Z1):(Y1, Z2),
-    (Y3, Z2):(Y2, Z1),
-    (Y2, Z3):(Y3, Z2),
-    (Y1, Z2):(Y2, Z3)
+    (Y2, Z1): (Y1, Z2),
+    (Y3, Z2): (Y2, Z1),
+    (Y2, Z3): (Y3, Z2),
+    (Y1, Z2): (Y2, Z3)
 }
 
 EDGE_ROTATE_XZ = {
-    (Y1, Z2):(Y2, Z1),
-    (Y2, Z1):(Y3, Z2),
-    (Y3, Z2):(Y2, Z3),
-    (Y2, Z3):(Y1, Z2)
+    (X1, Z2): (X2, Z1),
+    (X2, Z1): (X3, Z2),
+    (X3, Z2): (X2, Z3),
+    (X2, Z3): (X1, Z2)
 }
 
 EDGE_ROTATE_ZX = {
-    (Y2, Z1):(Y1, Z2),
-    (Y3, Z2):(Y2, Z1),
-    (Y2, Z3):(Y3, Z2),
-    (Y1, Z2):(Y2, Z3)
+    (X2, Z1): (X1, Z2),
+    (X3, Z2): (X2, Z1),
+    (X2, Z3): (X3, Z2),
+    (X1, Z2): (X2, Z3)
 }
 
 
+def build_box(position, colors):
+    count_2 = 0
+    for i in position:
+        if i == 2:
+            count_2 = count_2 + 1
+    if count_2 == 0:
+        return CenterBox(position, CORNER, colors)
+    elif count_2 == 1:
+        return CenterBox(position, EDGE, colors)
+    else:
+        return CenterBox(position, CENTER, colors)
 
 
 class Box:
-    def __init__(self, position, colors):
+    def __init__(self, position, position_type, colors):
         self.position = position
         self.colors = colors
-        count_2 = 0
-        for i in position:
-            if i == 2:
-                count_2 = count_2 + 1
-        if count_2 == 0:
-            self.type = CORNER
-        elif count_2 == 1:
-            self.type = EDGE
-        else:
-            self.type = CENTER
+        self.type = position_type
 
     def get_surface_color(self, surface):
         return self.colors[surface]
 
-    def transform(self, direction):
-        if self.type == CENTER:
-            self.transform_center(direction)
-        elif self.type == EDGE:
-            self.transform_edge(direction)
-        elif self.type == CORNER:
-            self.transform_corner(direction)
-
-    def transform_center(self, direction):
-        self.validate_transform(direction)
-        pass
-
-    def transform_edge(self, direction):
-        self.validate_transform(direction)
-        if direction in (L, R_):
-
-            pass
-        elif direction in (L_, R):
-            pass
-        pass
-
-    def transform_corner(self, direction):
-        self.validate_transform(direction)
+    def transform(self, direction, cube):
         pass
 
     def validate_transform(self, direction):
@@ -166,11 +163,52 @@ class Box:
                             (direction, self.position[X], self.position[Y], self.position[Z]))
         return True
 
-    def rotate_edge_XY(self, x, y):
+
+class CenterBox(Box):
+    def transform(self, direction, cube):
+        self.validate_transform(direction)
         pass
+
+
+class EdgeBox(Box):
+    def transform(self, direction, cube):
+        self.validate_transform(direction)
+        pass
+
+
+class CornerBox(Box):
+    def transform(self, direction, cube):
+        self.validate_transform(direction)
+        pass
+
 
 class Cube:
     COLORS = ('R', 'Y', 'B', 'G', 'O', 'W')
 
     def __init__(self):
-        pass
+        self.boxes = self.construct_standard()
+
+    def construct_standard(self):
+        boxes = {}
+        for x in (X1, X2, X3):
+            for y in (Y1, Y2, Y3):
+                for z in (Z1, Z2, Z3):
+                    colors = [NONE, NONE, NONE, NONE, NONE, NONE]
+                    if x == X1:
+                        colors[LEFT] = LEFT
+                    if x == X3:
+                        colors[RIGHT] = RIGHT
+                    if y == Y1:
+                        colors[BOTTOM] = BOTTOM
+                    if y == Y3:
+                        colors[TOP] = TOP
+                    if z == Z1:
+                        colors[FRONT] = FRONT
+                    if z == Z3:
+                        colors[BACK] = BACK
+                    boxes[(x, y, z)] = build_box([x, y, z], colors)
+        return boxes
+
+    def transform(self, direction):
+        (axis, axis_position, direction_, rest_axis, edge_position_list, corner_position_list) = DirectionToAxis[direction]
+
