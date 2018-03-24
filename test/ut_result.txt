@@ -1,0 +1,636 @@
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== 1 ============
+   GGG   
+   GGG   
+   GGG   
+   YYY   
+   RRR   
+   RRR   
+RBBWWWYYO
+RBBWWWYYO
+RBBWWWYYO
+   OOO   
+   OOO   
+   BBB   
+=========== 1 ============
+   GGG   
+   GGG   
+   GGG   
+   OOO   
+   RRR   
+   RRR   
+YBBWWWYYB
+YBBWWWYYB
+YBBWWWYYB
+   OOO   
+   OOO   
+   RRR   
+=========== 1 ============
+   GGG   
+   GGG   
+   GGG   
+   BBB   
+   RRR   
+   RRR   
+OBBWWWYYR
+OBBWWWYYR
+OBBWWWYYR
+   OOO   
+   OOO   
+   YYY   
+=========== 1 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== 2 ============
+   GGR   
+   GGR   
+   GGR   
+   RRW   
+   RRW   
+   RRW   
+BBBWWOYYY
+BBBWWOYYY
+BBBWWOYYY
+   OOG   
+   OOG   
+   OOG   
+=========== 2 ============
+   GGW   
+   GGW   
+   GGW   
+   RRO   
+   RRO   
+   RRO   
+BBBWWGYYY
+BBBWWGYYY
+BBBWWGYYY
+   OOR   
+   OOR   
+   OOR   
+=========== 2 ============
+   GGO   
+   GGO   
+   GGO   
+   RRG   
+   RRG   
+   RRG   
+BBBWWRYYY
+BBBWWRYYY
+BBBWWRYYY
+   OOW   
+   OOW   
+   OOW   
+=========== 2 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== 3 ============
+   OGG   
+   OGG   
+   OGG   
+   GRR   
+   GRR   
+   GRR   
+BBBRWWYYY
+BBBRWWYYY
+BBBRWWYYY
+   WOO   
+   WOO   
+   WOO   
+=========== 3 ============
+   WGG   
+   WGG   
+   WGG   
+   ORR   
+   ORR   
+   ORR   
+BBBGWWYYY
+BBBGWWYYY
+BBBGWWYYY
+   ROO   
+   ROO   
+   ROO   
+=========== 3 ============
+   RGG   
+   RGG   
+   RGG   
+   WRR   
+   WRR   
+   WRR   
+BBBOWWYYY
+BBBOWWYYY
+BBBOWWYYY
+   GOO   
+   GOO   
+   GOO   
+=========== 3 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== 4 ============
+   GGG   
+   GGG   
+   BBB   
+   RRR   
+   RRR   
+   RRR   
+WWWYYYGGG
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== 4 ============
+   GGG   
+   GGG   
+   WWW   
+   RRR   
+   RRR   
+   RRR   
+YYYGGGBBB
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== 4 ============
+   GGG   
+   GGG   
+   YYY   
+   RRR   
+   RRR   
+   RRR   
+GGGBBBWWW
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== 4 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== 5 ============
+   YYY   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+GGGBBBWWW
+   OOO   
+   OOO   
+   OOO   
+=========== 5 ============
+   WWW   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+YYYGGGBBB
+   OOO   
+   OOO   
+   OOO   
+=========== 5 ============
+   BBB   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+WWWYYYGGG
+   OOO   
+   OOO   
+   OOO   
+=========== 5 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== 6 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   YYY   
+BBRWWWOYY
+BBRWWWOYY
+BBRWWWOYY
+   BBB   
+   OOO   
+   OOO   
+=========== 6 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   OOO   
+BBYWWWBYY
+BBYWWWBYY
+BBYWWWBYY
+   RRR   
+   OOO   
+   OOO   
+=========== 6 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   BBB   
+BBOWWWRYY
+BBOWWWRYY
+BBOWWWRYY
+   YYY   
+   OOO   
+   OOO   
+=========== 6 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== -1 ============
+   BBB   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+WWWYYYGGG
+   OOO   
+   OOO   
+   OOO   
+=========== -1 ============
+   WWW   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+YYYGGGBBB
+   OOO   
+   OOO   
+   OOO   
+=========== -1 ============
+   YYY   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+GGGBBBWWW
+   OOO   
+   OOO   
+   OOO   
+=========== -1 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== -2 ============
+   GGG   
+   GGG   
+   YYY   
+   RRR   
+   RRR   
+   RRR   
+GGGBBBWWW
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== -2 ============
+   GGG   
+   GGG   
+   WWW   
+   RRR   
+   RRR   
+   RRR   
+YYYGGGBBB
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== -2 ============
+   GGG   
+   GGG   
+   BBB   
+   RRR   
+   RRR   
+   RRR   
+WWWYYYGGG
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== -2 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== -3 ============
+   RGG   
+   RGG   
+   RGG   
+   WRR   
+   WRR   
+   WRR   
+BBBOWWYYY
+BBBOWWYYY
+BBBOWWYYY
+   GOO   
+   GOO   
+   GOO   
+=========== -3 ============
+   WGG   
+   WGG   
+   WGG   
+   ORR   
+   ORR   
+   ORR   
+BBBGWWYYY
+BBBGWWYYY
+BBBGWWYYY
+   ROO   
+   ROO   
+   ROO   
+=========== -3 ============
+   OGG   
+   OGG   
+   OGG   
+   GRR   
+   GRR   
+   GRR   
+BBBRWWYYY
+BBBRWWYYY
+BBBRWWYYY
+   WOO   
+   WOO   
+   WOO   
+=========== -3 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== -4 ============
+   GGO   
+   GGO   
+   GGO   
+   RRG   
+   RRG   
+   RRG   
+BBBWWRYYY
+BBBWWRYYY
+BBBWWRYYY
+   OOW   
+   OOW   
+   OOW   
+=========== -4 ============
+   GGW   
+   GGW   
+   GGW   
+   RRO   
+   RRO   
+   RRO   
+BBBWWGYYY
+BBBWWGYYY
+BBBWWGYYY
+   OOR   
+   OOR   
+   OOR   
+=========== -4 ============
+   GGR   
+   GGR   
+   GGR   
+   RRW   
+   RRW   
+   RRW   
+BBBWWOYYY
+BBBWWOYYY
+BBBWWOYYY
+   OOG   
+   OOG   
+   OOG   
+=========== -4 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== -5 ============
+   GGG   
+   GGG   
+   GGG   
+   BBB   
+   RRR   
+   RRR   
+OBBWWWYYR
+OBBWWWYYR
+OBBWWWYYR
+   OOO   
+   OOO   
+   YYY   
+=========== -5 ============
+   GGG   
+   GGG   
+   GGG   
+   OOO   
+   RRR   
+   RRR   
+YBBWWWYYB
+YBBWWWYYB
+YBBWWWYYB
+   OOO   
+   OOO   
+   RRR   
+=========== -5 ============
+   GGG   
+   GGG   
+   GGG   
+   YYY   
+   RRR   
+   RRR   
+RBBWWWYYO
+RBBWWWYYO
+RBBWWWYYO
+   OOO   
+   OOO   
+   BBB   
+=========== -5 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
+=========== -6 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   YYY   
+BBRWWWOYY
+BBRWWWOYY
+BBRWWWOYY
+   BBB   
+   OOO   
+   OOO   
+=========== -6 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   OOO   
+BBYWWWBYY
+BBYWWWBYY
+BBYWWWBYY
+   RRR   
+   OOO   
+   OOO   
+=========== -6 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   BBB   
+BBOWWWRYY
+BBOWWWRYY
+BBOWWWRYY
+   YYY   
+   OOO   
+   OOO   
+=========== -6 ============
+   GGG   
+   GGG   
+   GGG   
+   RRR   
+   RRR   
+   RRR   
+BBBWWWYYY
+BBBWWWYYY
+BBBWWWYYY
+   OOO   
+   OOO   
+   OOO   
