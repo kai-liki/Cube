@@ -23,7 +23,7 @@ def main():
     print '=========== initialized with %s-step shuffle ============' % step
     cube.show()
     print ''
-    print cube.show_as_list()
+    print cube.calculate_feature_string()
     print cube.check()
     command = raw_input("Command: ").upper()
     while command != 'Q':

@@ -112,6 +112,24 @@ L_ = -4
 U_ = -5
 D_ = -6
 
+DIRECTION_OFFSET = 6
+# Direction + DIRECTION_OFFSET
+DIRECTIONS = [
+    'D-',  # 0
+    'U-',  # 1
+    'L-',  # 2
+    'R-',  # 3
+    'B-',  # 4
+    'F-',  # 5
+    '0',   # 6
+    'F',   # 7
+    'B',   # 8
+    'R',   # 9
+    'L',   # 10
+    'U',   # 11
+    'D',   # 12
+]
+
 # Direction axis mapping
 DirectionToAxis = {
     # Direction : Axis, Axis position, Direction, (Other 2 axis), [Edge position list in REVERSE], [Corner position list in REVERSE]
@@ -144,11 +162,11 @@ def build_box(position, colors):
         if i == 2:
             count_2 = count_2 + 1
     if count_2 == 0:
-        return CenterBox(position, CORNER, colors)
+        return Box(position, CORNER, colors)
     elif count_2 == 1:
-        return CenterBox(position, EDGE, colors)
+        return Box(position, EDGE, colors)
     else:
-        return CenterBox(position, CENTER, colors)
+        return Box(position, CENTER, colors)
 
 
 class Box:
@@ -168,9 +186,6 @@ class Box:
 
     def get_position(self):
         return self.position
-
-    def transform(self, direction, cube):
-        pass
 
     def validate_transform(self, direction):
         if (direction in (L, L_) and self.position[X] != X1) or \
@@ -193,29 +208,12 @@ class Box:
         self.set_surface_color(rotate_mapping[3][0], first_surface_color)
 
 
-class CenterBox(Box):
-    def transform(self, direction, cube):
-        self.validate_transform(direction)
-        pass
-
-
-class EdgeBox(Box):
-    def transform(self, direction, cube):
-        self.validate_transform(direction)
-        pass
-
-
-class CornerBox(Box):
-    def transform(self, direction, cube):
-        self.validate_transform(direction)
-        pass
-
-
 class Cube:
 
     def __init__(self):
         self.boxes = self.construct_standard()
-        self.standard_string = self.show_as_list()
+        self.standard_string = self.calculate_feature_string()
+        self.feature_string = self.standard_string
 
     def construct_standard(self):
         boxes = {}
@@ -300,8 +298,11 @@ class Cube:
         # corner rotate
         self.rotate(axis, axis_position, rest_axis, corner_position_list, rotate_mapping)
 
+        # set feature string
+        self.feature_string = self.calculate_feature_string()
+
     def check(self):
-        return self.standard_string == self.show_as_list()
+        return self.standard_string == self.feature_string
 
     def show(self, fp=None):
         def screen_print(bc0, bc1, bc2, bc3, bc4, bc5, bc6, bc7, bc8):
@@ -470,7 +471,7 @@ class Cube:
         show_method(box_color_0, box_color_1, box_color_2, box_color_3,
                     box_color_4, box_color_5, box_color_6, box_color_7, box_color_8)
 
-    def show_as_list(self):
+    def calculate_feature_string(self):
         display_list = []
         for x in (X1, X2, X3):
             for y in (Y1, Y2, Y3):

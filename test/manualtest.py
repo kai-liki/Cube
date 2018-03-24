@@ -21,7 +21,7 @@ def main():
     cube = Cube()
     print '=========== initial ============'
     cube.show()
-    print cube.show_as_list()
+    print cube.calculate_feature_string()
     print cube.check()
     print ''
     command = raw_input("Command: ").upper()
