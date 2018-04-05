@@ -236,17 +236,6 @@ class Cube:
                     boxes[(x, y, z)] = build_box([x, y, z], colors)
         return boxes
 
-    def shuffle(self):
-        min_step = 64
-        max_step = 1024
-        real_step = random.randint(min_step, max_step)
-        for i in range(0, real_step):
-            direction = random.randint(-6, 6)
-            while direction == 0:
-                direction = random.randint(-6, 6)
-            self.transform(direction)
-        return real_step
-
     def get_box(self, position):
         return self.boxes[position]
 
@@ -483,3 +472,175 @@ class Cube:
                             display_list.append(COLORS[color])
         return ''.join(display_list)
 
+    def take_snapshot(self):
+        snapshot = [None, None, None, None, None, None]
+
+        # back
+        back = dict()
+        back[(X1, Y1)] = self.get_box((X1, Y1, Z3)).get_surface_color(BACK)
+        back[(X2, Y1)] = self.get_box((X2, Y1, Z3)).get_surface_color(BACK)
+        back[(X3, Y1)] = self.get_box((X3, Y1, Z3)).get_surface_color(BACK)
+        back[(X1, Y2)] = self.get_box((X1, Y2, Z3)).get_surface_color(BACK)
+        back[(X2, Y2)] = self.get_box((X2, Y2, Z3)).get_surface_color(BACK)
+        back[(X3, Y2)] = self.get_box((X3, Y2, Z3)).get_surface_color(BACK)
+        back[(X1, Y3)] = self.get_box((X1, Y3, Z3)).get_surface_color(BACK)
+        back[(X2, Y3)] = self.get_box((X2, Y3, Z3)).get_surface_color(BACK)
+        back[(X3, Y3)] = self.get_box((X3, Y3, Z3)).get_surface_color(BACK)
+        snapshot[BACK] = back
+
+        # top
+        top = dict()
+        top[(X1, Z3)] = self.get_box((X1, Y3, Z3)).get_surface_color(TOP)
+        top[(X2, Z3)] = self.get_box((X2, Y3, Z3)).get_surface_color(TOP)
+        top[(X3, Z3)] = self.get_box((X3, Y3, Z3)).get_surface_color(TOP)
+        top[(X1, Z2)] = self.get_box((X1, Y3, Z2)).get_surface_color(TOP)
+        top[(X2, Z2)] = self.get_box((X2, Y3, Z2)).get_surface_color(TOP)
+        top[(X3, Z2)] = self.get_box((X3, Y3, Z2)).get_surface_color(TOP)
+        top[(X1, Z1)] = self.get_box((X1, Y3, Z1)).get_surface_color(TOP)
+        top[(X2, Z1)] = self.get_box((X2, Y3, Z1)).get_surface_color(TOP)
+        top[(X3, Z1)] = self.get_box((X3, Y3, Z1)).get_surface_color(TOP)
+        snapshot[TOP] = top
+
+        # left
+        left = dict()
+        left[(Y3, Z3)] = self.get_box((X1, Y3, Z3)).get_surface_color(LEFT)
+        left[(Y3, Z2)] = self.get_box((X1, Y3, Z2)).get_surface_color(LEFT)
+        left[(Y3, Z1)] = self.get_box((X1, Y3, Z1)).get_surface_color(LEFT)
+        left[(Y2, Z3)] = self.get_box((X1, Y2, Z3)).get_surface_color(LEFT)
+        left[(Y2, Z2)] = self.get_box((X1, Y2, Z2)).get_surface_color(LEFT)
+        left[(Y2, Z1)] = self.get_box((X1, Y2, Z1)).get_surface_color(LEFT)
+        left[(Y1, Z3)] = self.get_box((X1, Y1, Z3)).get_surface_color(LEFT)
+        left[(Y1, Z2)] = self.get_box((X1, Y1, Z2)).get_surface_color(LEFT)
+        left[(Y1, Z1)] = self.get_box((X1, Y1, Z1)).get_surface_color(LEFT)
+        snapshot[LEFT] = left
+
+        # right
+        right = dict()
+        right[(Y3, Z1)] = self.get_box((X3, Y3, Z1)).get_surface_color(RIGHT)
+        right[(Y3, Z2)] = self.get_box((X3, Y3, Z2)).get_surface_color(RIGHT)
+        right[(Y3, Z3)] = self.get_box((X3, Y3, Z3)).get_surface_color(RIGHT)
+        right[(Y2, Z1)] = self.get_box((X3, Y2, Z1)).get_surface_color(RIGHT)
+        right[(Y2, Z2)] = self.get_box((X3, Y2, Z2)).get_surface_color(RIGHT)
+        right[(Y2, Z3)] = self.get_box((X3, Y2, Z3)).get_surface_color(RIGHT)
+        right[(Y1, Z1)] = self.get_box((X3, Y1, Z1)).get_surface_color(RIGHT)
+        right[(Y1, Z2)] = self.get_box((X3, Y1, Z2)).get_surface_color(RIGHT)
+        right[(Y1, Z3)] = self.get_box((X3, Y1, Z3)).get_surface_color(RIGHT)
+        snapshot[RIGHT] = right
+
+        # front
+        front = dict()
+        front[(X1, Y3)] = self.get_box((X1, Y3, Z1)).get_surface_color(FRONT)
+        front[(X2, Y3)] = self.get_box((X2, Y3, Z1)).get_surface_color(FRONT)
+        front[(X3, Y3)] = self.get_box((X3, Y3, Z1)).get_surface_color(FRONT)
+        front[(X1, Y2)] = self.get_box((X1, Y2, Z1)).get_surface_color(FRONT)
+        front[(X2, Y2)] = self.get_box((X2, Y2, Z1)).get_surface_color(FRONT)
+        front[(X3, Y2)] = self.get_box((X3, Y2, Z1)).get_surface_color(FRONT)
+        front[(X1, Y1)] = self.get_box((X1, Y1, Z1)).get_surface_color(FRONT)
+        front[(X2, Y1)] = self.get_box((X2, Y1, Z1)).get_surface_color(FRONT)
+        front[(X3, Y1)] = self.get_box((X3, Y1, Z1)).get_surface_color(FRONT)
+        snapshot[FRONT] = front
+
+        # bottom
+        bottom = dict()
+        bottom[(X1, Z1)] = self.get_box((X1, Y1, Z1)).get_surface_color(BOTTOM)
+        bottom[(X2, Z1)] = self.get_box((X2, Y1, Z1)).get_surface_color(BOTTOM)
+        bottom[(X3, Z1)] = self.get_box((X3, Y1, Z1)).get_surface_color(BOTTOM)
+        bottom[(X1, Z2)] = self.get_box((X1, Y1, Z2)).get_surface_color(BOTTOM)
+        bottom[(X2, Z2)] = self.get_box((X2, Y1, Z2)).get_surface_color(BOTTOM)
+        bottom[(X3, Z2)] = self.get_box((X3, Y1, Z2)).get_surface_color(BOTTOM)
+        bottom[(X1, Z3)] = self.get_box((X1, Y1, Z3)).get_surface_color(BOTTOM)
+        bottom[(X2, Z3)] = self.get_box((X2, Y1, Z3)).get_surface_color(BOTTOM)
+        bottom[(X3, Z3)] = self.get_box((X3, Y1, Z3)).get_surface_color(BOTTOM)
+        snapshot[BOTTOM] = bottom
+
+        return snapshot
+
+
+class Step:
+    def __init__(self, sequence_number, direction, previous_step, post_snapshot, feature_string):
+        self.sequence_number = sequence_number
+        self.direction = direction
+        self.previous_step = previous_step
+        self.post_snapshot = post_snapshot
+        self.feature_string = feature_string
+
+
+class Game:
+    def __init__(self, cube):
+        assert isinstance(cube, Cube)
+        self.cube = cube
+        self.shuffle_full_steps = []
+        self.shuffle_steps = []
+        self.feature_string_set = set()
+        self.is_solved = False
+        self.solve_steps = []
+
+    def shuffle(self):
+        self.shuffle_full_steps = []
+        self.shuffle_steps = []
+        self.feature_string_set = set()
+        self.is_solved = False
+        self.solve_steps = []
+
+        min_step = 64
+        max_step = 1024
+        real_step = random.randint(min_step, max_step)
+
+        step_duplication = {}
+        previous_step = None
+
+        for i in range(0, real_step):
+            direction = random.randint(-6, 6)
+            while direction == 0:
+                direction = random.randint(-6, 6)
+            self.cube.transform(direction)
+            step = Step(real_step - i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
+            self.shuffle_full_steps.append(step)
+            previous_step = step
+            if self.cube.feature_string in step_duplication:
+                start_step = real_step - 1
+                end_step = step_duplication[self.cube.feature_string][1]
+                step_duplication[self.cube.feature_string] = (start_step, end_step, end_step - start_step)
+            else:
+                step_duplication[self.cube.feature_string] = (real_step - 1, real_step - 1, 0)
+
+        self.shuffle_steps = self.eliminate_duplicated_steps()
+
+        return real_step
+
+    def eliminate_duplicated_steps(self):
+        steps = []
+        for step in self.shuffle_full_steps:
+            pass
+        return steps
+
+    def play_step(self, direction):
+        self.cube.transform(direction)
+        if self.cube.check():
+            return True
+        return False
+
+    def choose_directon(self):
+        return 0
+
+    def solve(self, max_steps=1000):
+        self.solve_steps = []
+        self.is_solved = False
+        step = 0
+        direction_str = 'NULL'
+        pre_solve_step = None
+
+        while not self.cube.check() or step > max_steps:
+            try:
+                step = step + 1
+                direction = self.choose_directon()
+                direction_str = DIRECTIONS[direction + DIRECTION_OFFSET]
+                self.cube.transform(direction)
+                solve_step = Step(step, direction, pre_solve_step, self.cube.take_snapshot(), self.cube.feature_string)
+                self.solve_steps.append(solve_step)
+            except RuntimeError as rex:
+                print 'Runtime error happens at step %s: %s. Message: %s' % (step, direction_str, rex.message)
+                print ''.join([DIRECTIONS[direction + DIRECTION_OFFSET] for direction in self.shuffle_full_steps])
+                print len(self.feature_string_set)
+
+        self.is_solved = self.cube.check()
