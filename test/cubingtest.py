@@ -11,8 +11,8 @@ sys.setrecursionlimit(5000)
 def main():
     cube = Cube()
     game = Game(cube)
-
-    step = game.shuffle()
+    game.shuffle()
+    step = len(game.shuffle_full_steps)
     print '=========== initialized with %s-step shuffle ============' % step
     cube.show()
     print 'Solving . . . . . . '

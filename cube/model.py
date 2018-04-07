@@ -564,6 +564,10 @@ class Step:
         self.post_snapshot = post_snapshot
         self.feature_string = feature_string
 
+    def print_step(self):
+        print self.sequence_number, DIRECTIONS[self.direction + DIRECTION_OFFSET], self.feature_string, \
+            self.previous_step.sequence_number if self.previous_step is not None else 'None'
+
 
 class Game:
     def __init__(self, cube):
@@ -571,54 +575,116 @@ class Game:
         self.cube = cube
         self.shuffle_full_steps = []
         self.shuffle_steps = []
-        self.feature_string_set = set()
         self.is_solved = False
         self.solve_steps = []
 
-    def shuffle(self):
+    def shuffle(self, min_step=64, max_step=1024, directions=None):
         self.shuffle_full_steps = []
         self.shuffle_steps = []
-        self.feature_string_set = set()
         self.is_solved = False
         self.solve_steps = []
 
-        min_step = 64
-        max_step = 1024
-        real_step = random.randint(min_step, max_step)
-
-        step_duplication = {}
         previous_step = None
 
-        for i in range(0, real_step):
-            direction = random.randint(-6, 6)
-            while direction == 0:
+        if directions is None:
+            real_step = random.randint(min_step, max_step)
+            for i in range(0, real_step):
                 direction = random.randint(-6, 6)
-            self.cube.transform(direction)
-            step = Step(real_step - i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
-            self.shuffle_full_steps.append(step)
-            previous_step = step
-            if self.cube.feature_string in step_duplication:
-                start_step = real_step - 1
-                end_step = step_duplication[self.cube.feature_string][1]
-                step_duplication[self.cube.feature_string] = (start_step, end_step, end_step - start_step)
-            else:
-                step_duplication[self.cube.feature_string] = (real_step - 1, real_step - 1, 0)
+                while direction == 0:
+                    direction = random.randint(-6, 6)
+                self.cube.transform(direction)
+
+                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
+                self.shuffle_full_steps.append(step)
+                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
+                self.shuffle_steps.append(step)
+                previous_step = step
+        else:
+            assert isinstance(directions, list)
+            i = 0
+            for direction in directions:
+                self.cube.transform(direction)
+
+                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
+                self.shuffle_full_steps.append(step)
+                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
+                self.shuffle_steps.append(step)
+                previous_step = step
+                i = i + 1
 
         self.shuffle_steps = self.eliminate_duplicated_steps()
 
-        return real_step
-
     def eliminate_duplicated_steps(self):
-        steps = []
-        for step in self.shuffle_full_steps:
-            pass
-        return steps
+        def sort_duplication_pair_by_length(x, y):
+            if x[3] > y[3]: return -1
+            if x[3] == y[3]: return 0
+            if x[3] < y[3]: return 1
 
-    def play_step(self, direction):
-        self.cube.transform(direction)
-        if self.cube.check():
-            return True
-        return False
+        def sort_duplication_pair_by_start(x, y):
+            if x[1] > y[1]: return 1
+            if x[1] == y[1]: return 0
+            if x[1] < y[1]: return -1
+
+        total_length = len(self.shuffle_steps)
+        duplication_pairs = {}
+        for step in self.shuffle_steps:
+            if step.feature_string in duplication_pairs:
+                _, start, _, _ = duplication_pairs[step.feature_string]
+                length = step.sequence_number - start
+                duplication_pairs[step.feature_string] = (step.feature_string, start, step.sequence_number, length)
+            elif step.feature_string == self.cube.standard_string:
+                duplication_pairs[step.feature_string] = (step.feature_string, -1, step.sequence_number, step.sequence_number + 1)
+            else:
+                duplication_pairs[step.feature_string] = (step.feature_string, step.sequence_number, -1, total_length - step.sequence_number - 1)
+
+        def f(s): return s[2] != -1
+
+        ordered = filter(f, [tmp_step for tmp_step in duplication_pairs.itervalues()])
+        ordered.sort(cmp=sort_duplication_pair_by_length)
+
+        max_length_idx = 0
+        while max_length_idx < len(ordered) - 1:
+            max_length_pair = ordered[max_length_idx]
+            search_idx = max_length_idx + 1
+            while search_idx < len(ordered):
+                search_pair = ordered[search_idx]
+                if (search_pair[2] > max_length_pair[1] and search_pair[2] <= max_length_pair[2]) or (search_pair[1] >= max_length_pair[1] and search_pair[1] < max_length_pair[2]):
+                    ordered.remove(search_pair)
+                else:
+                    search_idx = search_idx + 1
+
+            max_length_idx = max_length_idx + 1
+
+        ordered.sort(cmp=sort_duplication_pair_by_start)
+        for pair in ordered:
+            start = pair[1]
+            end = pair[2]
+
+            for i in range(start + 1, end + 1):
+                self.shuffle_steps[i] = None
+            if end + 1 < len(self.shuffle_steps):
+                step = self.shuffle_steps[end + 1]
+                if start < 0:
+                    step.previous_step = None
+                else:
+                    step.previous_step = self.shuffle_steps[start]
+
+        def f_None(x): return x is not None
+        return filter(f_None, self.shuffle_steps)
+
+    def print_shuffle_full_steps(self):
+        self.__print_steps__(self.shuffle_full_steps)
+
+    def print_shuffle_steps(self):
+        self.__print_steps__(self.shuffle_steps)
+
+    def __print_steps__(self, steps):
+        for step in steps:
+            step.print_step()
+
+    def play(self, directions):
+        for direction in directions:
+            self.cube.transform(direction)
 
     def choose_directon(self):
         return 0
@@ -641,6 +707,5 @@ class Game:
             except RuntimeError as rex:
                 print 'Runtime error happens at step %s: %s. Message: %s' % (step, direction_str, rex.message)
                 print ''.join([DIRECTIONS[direction + DIRECTION_OFFSET] for direction in self.shuffle_full_steps])
-                print len(self.feature_string_set)
 
         self.is_solved = self.cube.check()
