@@ -1,4 +1,5 @@
 import random
+import struct
 
 CENTER = 0
 EDGE = 1
@@ -566,6 +567,25 @@ class Sample:
         self.feature = feature
         self.direction = 0
 
+    def normalize_color(self, color):
+        return float((float(color) + 1.0) / 6.0)
+
+    def normalize_direction(self, direction):
+        return float((float(direction) + float(6)) / float(12))
+
+    def to_byte_array_list(self):
+        sample_feature_list = [bytearray(struct.pack("f", self.normalize_color(color))) for color in self.feature]
+        sample_feature_list.append(bytearray(struct.pack("f", self.normalize_direction(self.direction))))
+        return sample_feature_list
+
+
+def create_Sample_from_buffer(buff):
+    result = []
+    for data in buff:
+        buf = struct.unpack_from('f', buffer=data)
+        result.append(buf[0])
+    return result
+
 
 class Step:
     def __init__(self, sequence_number, direction, previous_step, post_snapshot, feature, feature_string):
@@ -629,11 +649,11 @@ class Game:
         if sample_file is not None:
             with open(sample_file, 'w') as fp:
                 for i in range(len(self.shuffle_steps) - 1, -1, -1):
-                    fp.write("%d" % step.direction)
-                    for color in step.feature:
-                        fp.write("%d" % color)
+                    step = self.shuffle_steps[i]
+                    sample = Sample(step.feature, step.direction)
+                    for data in sample.to_byte_array_list():
+                        fp.write(data)
                     fp.flush()
-
 
     def eliminate_duplicated_steps(self):
         def sort_duplication_pair_by_length(x, y):
@@ -730,3 +750,5 @@ class Game:
                 print ''.join([DIRECTIONS[direction + DIRECTION_OFFSET] for direction in self.shuffle_full_steps])
 
         self.is_solved = self.cube.check()
+
+

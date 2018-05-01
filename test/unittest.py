@@ -1,5 +1,7 @@
-from cube.model import Cube
+from cube.model import Cube, Sample
 from cube.model import F, B, R, L, U, D, F_, B_, R_, L_, U_, D_
+from cube.model import RED, BLUE, GREEN, YELLOW, ORANGE, WHITE
+from cube.model import create_Sample_from_buffer
 from difflib import unified_diff
 from sys import stdout
 
@@ -41,8 +43,17 @@ def test_transform():
     print '\nTest transform done.'
 
 
+def test_sample():
+    sample = Sample([RED, BLUE, GREEN, YELLOW, ORANGE, WHITE], D)
+    buff = sample.to_byte_array_list()
+    buff_des = create_Sample_from_buffer(buff)
+    print buff
+    print buff_des
+
+
 def main():
-    test_transform()
+    # test_transform()
+    test_sample()
     print 'Done'
 
 
