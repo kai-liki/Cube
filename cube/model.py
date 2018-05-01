@@ -212,7 +212,8 @@ class Cube:
 
     def __init__(self):
         self.boxes = self.construct_standard()
-        self.standard_string = self.calculate_feature_string()
+        self.feature = self.calculate_feature()
+        self.standard_string = self.calculate_feature_string(self.feature)
         self.feature_string = self.standard_string
 
     def construct_standard(self):
@@ -288,7 +289,8 @@ class Cube:
         self.rotate(axis, axis_position, rest_axis, corner_position_list, rotate_mapping)
 
         # set feature string
-        self.feature_string = self.calculate_feature_string()
+        self.feature = self.calculate_feature()
+        self.feature_string = self.calculate_feature_string(self.feature)
 
     def check(self):
         return self.standard_string == self.feature_string
@@ -460,7 +462,7 @@ class Cube:
         show_method(box_color_0, box_color_1, box_color_2, box_color_3,
                     box_color_4, box_color_5, box_color_6, box_color_7, box_color_8)
 
-    def calculate_feature_string(self):
+    def calculate_feature(self):
         display_list = []
         for x in (X1, X2, X3):
             for y in (Y1, Y2, Y3):
@@ -469,8 +471,11 @@ class Cube:
                     for surface in range(0, 6):
                         color = box.get_surface_color(surface)
                         if color != NONE:
-                            display_list.append(COLORS[color])
-        return ''.join(display_list)
+                            display_list.append(color)
+        return display_list
+
+    def calculate_feature_string(self, feature):
+        return ''.join([COLORS[color] for color in feature])
 
     def take_snapshot(self):
         snapshot = [None, None, None, None, None, None]
@@ -556,12 +561,19 @@ class Cube:
         return snapshot
 
 
+class Sample:
+    def __init__(self, feature, direction):
+        self.feature = feature
+        self.direction = 0
+
+
 class Step:
-    def __init__(self, sequence_number, direction, previous_step, post_snapshot, feature_string):
+    def __init__(self, sequence_number, direction, previous_step, post_snapshot, feature, feature_string):
         self.sequence_number = sequence_number
         self.direction = direction
         self.previous_step = previous_step
         self.post_snapshot = post_snapshot
+        self.feature = feature
         self.feature_string = feature_string
 
     def print_step(self):
@@ -578,7 +590,7 @@ class Game:
         self.is_solved = False
         self.solve_steps = []
 
-    def shuffle(self, min_step=64, max_step=1024, directions=None):
+    def shuffle(self, min_step=64, max_step=1024, directions=None, sample_file=None):
         self.shuffle_full_steps = []
         self.shuffle_steps = []
         self.is_solved = False
@@ -594,9 +606,9 @@ class Game:
                     direction = random.randint(-6, 6)
                 self.cube.transform(direction)
 
-                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
+                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature, self.cube.feature_string)
                 self.shuffle_full_steps.append(step)
-                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
+                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature, self.cube.feature_string)
                 self.shuffle_steps.append(step)
                 previous_step = step
         else:
@@ -605,14 +617,23 @@ class Game:
             for direction in directions:
                 self.cube.transform(direction)
 
-                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
+                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature, self.cube.feature_string)
                 self.shuffle_full_steps.append(step)
-                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature_string)
+                step = Step(i, direction, previous_step, self.cube.take_snapshot(), self.cube.feature, self.cube.feature_string)
                 self.shuffle_steps.append(step)
                 previous_step = step
                 i = i + 1
 
         self.shuffle_steps = self.eliminate_duplicated_steps()
+
+        if sample_file is not None:
+            with open(sample_file, 'w') as fp:
+                for i in range(len(self.shuffle_steps) - 1, -1, -1):
+                    fp.write("%d" % step.direction)
+                    for color in step.feature:
+                        fp.write("%d" % color)
+                    fp.flush()
+
 
     def eliminate_duplicated_steps(self):
         def sort_duplication_pair_by_length(x, y):

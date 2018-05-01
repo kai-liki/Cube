@@ -79,9 +79,18 @@ def main():
     # test_shuffle_elimination(directions=[L, L, L, L, F])
     # test_shuffle_elimination(directions=[F, B, L, L, L, L, L, R])
     # test_shuffle_elimination(directions=[F, B, L, L_, B_])
-    for i in range(0, 100000):
-        print i
-        validate_shuffle_elimination()
+
+    # for i in range(0, 100000):
+    #     print i
+    #     validate_shuffle_elimination()
+
+    cube = Cube()
+    game = Game(cube)
+    game.shuffle(min_step=3, max_step=3)
+    print 'Full step'
+    game.print_shuffle_full_steps()
+    print 'Step'
+    game.print_shuffle_steps()
 
 
 if __name__ == '__main__':
