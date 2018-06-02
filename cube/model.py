@@ -565,17 +565,22 @@ class Cube:
 class Sample:
     def __init__(self, feature, direction):
         self.feature = feature
-        self.direction = 0
+        self.direction = direction
 
     def normalize_color(self, color):
         return float((float(color) + 1.0) / 6.0)
 
-    def normalize_direction(self, direction):
-        return float((float(direction) + float(6)) / float(12))
+    def to_direction_vector(self, direction):
+        vector = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        if direction > 0:
+            vector[direction + 5] = 1.0
+        else:
+            vector[direction + 6] = 1.0
+        return vector
 
     def to_byte_array_list(self):
         sample_feature_list = [bytearray(struct.pack("f", self.normalize_color(color))) for color in self.feature]
-        sample_feature_list.append(bytearray(struct.pack("f", self.normalize_direction(self.direction))))
+        sample_feature_list.extend([bytearray(struct.pack("f", direction_digit)) for direction_digit in self.to_direction_vector(self.direction)])
         return sample_feature_list
 
 
@@ -610,7 +615,7 @@ class Game:
         self.is_solved = False
         self.solve_steps = []
 
-    def shuffle(self, min_step=64, max_step=1024, directions=None, sample_file=None):
+    def shuffle(self, min_step=64, max_step=1024, directions=None):
         self.shuffle_full_steps = []
         self.shuffle_steps = []
         self.is_solved = False
@@ -646,14 +651,24 @@ class Game:
 
         self.shuffle_steps = self.eliminate_duplicated_steps()
 
-        if sample_file is not None:
-            with open(sample_file, 'w') as fp:
+    def export_to_file_point(self, file_point):
+        if file_point is not None:
+            for i in range(len(self.shuffle_steps) - 1, -1, -1):
+                step = self.shuffle_steps[i]
+                sample = Sample(step.feature, step.direction)
+                for data in sample.to_byte_array_list():
+                    file_point.write(data)
+            file_point.flush()
+
+    def export_to_file(self, file_path):
+        if file_path is not None:
+            with open(file_path, 'w') as fp:
                 for i in range(len(self.shuffle_steps) - 1, -1, -1):
                     step = self.shuffle_steps[i]
                     sample = Sample(step.feature, step.direction)
                     for data in sample.to_byte_array_list():
                         fp.write(data)
-                    fp.flush()
+                fp.flush()
 
     def eliminate_duplicated_steps(self):
         def sort_duplication_pair_by_length(x, y):

@@ -3,6 +3,7 @@ from cube.model import F, B, R, L, U, D, F_, B_, R_, L_, U_, D_
 from cube.model import Game
 from cube.model import create_Sample_from_buffer
 from cube.model import DIRECTIONS, DIRECTION_OFFSET
+from cube.cubing import CUBE_DATA_LEN, TAG_DATA_LEN, FEATURE_DATA_LEN
 
 command_map = {
     'F': F,
@@ -87,7 +88,8 @@ def main():
 
     cube = Cube()
     game = Game(cube)
-    game.shuffle(min_step=3, max_step=3, sample_file='./sample_file.dat')
+    game.shuffle(min_step=3, max_step=3)
+    game.export_to_file(file_path='./sample_file.dat')
     print 'Full step'
     game.print_shuffle_full_steps()
     print 'Step'
@@ -97,15 +99,16 @@ def main():
         is_eof = False
         while True:
             step_sample = []
-            for i in range(0, 55):
+            for i in range(0, CUBE_DATA_LEN):
                 data = fp.read(4)
                 if '' == data:
                     is_eof = True
                 else:
                     step_sample.append(data)
-            print create_Sample_from_buffer(step_sample)
             if is_eof:
                 break
+            print create_Sample_from_buffer(step_sample)
+
 
 
 if __name__ == '__main__':
