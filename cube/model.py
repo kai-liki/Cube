@@ -463,6 +463,23 @@ class Cube:
         show_method(box_color_0, box_color_1, box_color_2, box_color_3,
                     box_color_4, box_color_5, box_color_6, box_color_7, box_color_8)
 
+    #
+    #  9         18            27
+	#  8 6       17 15         26 24
+	#  7 5 3     16 14 12      25 23 21
+	#    4 2        13 11         22 20
+	#      1           10            19
+    #
+    #     FRONT = 0   # WHITE
+    #     LEFT = 1    # BLUE
+    #     BOTTOM = 2  # ORANGE
+    #     BACK = 3    # GREEN
+    #     TOP = 4     # RED
+    #     RIGHT = 5   # YELLOW
+    #
+    # eg.
+    # WOY BO BOG WO B BG WOB BR BGR WY  O   OG  W       G  WB  R   GR  WYR  OY  OGY  WR  Y   GY  WBR  RY  GRY
+    # 1   2  3   4  5 6  7   8  9   10  11  12  13  14  15 16  17  18  19   20  21   22  23  24  25   26  27
     def calculate_feature(self):
         display_list = []
         for x in (X1, X2, X3):
