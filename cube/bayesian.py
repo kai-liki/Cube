@@ -1,3 +1,5 @@
+import yaml
+
 
 total_times = 0
 features = {}
@@ -73,3 +75,22 @@ def possibility_decision_feature(decision_name, feature_str):
 
     return float(float(decision.features[feature_str]) / float(decision.appear_times))
 
+
+def export(file_path):
+    global total_times
+    result = {'total_times': total_times, 'features': features, 'decisions': decisions}
+
+    with open(file_path, 'w') as fp:
+        yaml.dump(result, fp)
+
+
+def load(file_path):
+    global total_times, features, decisions
+    root_json = None
+    with open(file_path, 'r') as fp:
+        root_json = yaml.load(fp)
+
+    assert isinstance(root_json, dict)
+    total_times = root_json['total_times']
+    features = root_json['features']
+    decisions = root_json['decisions']

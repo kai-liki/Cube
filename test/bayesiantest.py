@@ -32,11 +32,75 @@ def test_bayesian():
     cube.transform(B)
     bayesian.add_feature_and_decision(cube.feature_string, DIRECTIONS[-B + DIRECTION_OFFSET])
 
+    cube.transform(-B)
+    bayesian.add_feature_and_decision(cube.feature_string, DIRECTIONS[B + DIRECTION_OFFSET])
+
+    cube.transform(R)
+    bayesian.add_feature_and_decision(cube.feature_string, DIRECTIONS[-R + DIRECTION_OFFSET])
+
+    cube.transform(L)
+    bayesian.add_feature_and_decision(cube.feature_string, DIRECTIONS[-L + DIRECTION_OFFSET])
+
+    cube.transform(B)
+    bayesian.add_feature_and_decision(cube.feature_string, DIRECTIONS[-B + DIRECTION_OFFSET])
+
+    print_possibility()
+
+    bayesian.export('bayesiantest.yaml')
+
+    bayesian.load('bayesiantest.yaml')
+
     print_possibility()
 
 
+def test_shuffle_bayesian():
+    cube = Cube()
+    game = Game(cube)
+    game.shuffle(min_step=3, max_step=100)
+    for step in game.shuffle_steps:
+        bayesian.add_feature_and_decision(step.feature_string, DIRECTIONS[-step.direction + DIRECTION_OFFSET])
+
+    cube = Cube()
+    game = Game(cube)
+    game.shuffle(min_step=3, max_step=100)
+    for step in game.shuffle_steps:
+        bayesian.add_feature_and_decision(step.feature_string, DIRECTIONS[-step.direction + DIRECTION_OFFSET])
+
+    cube = Cube()
+    game = Game(cube)
+    game.shuffle(min_step=3, max_step=100)
+    for step in game.shuffle_steps:
+        bayesian.add_feature_and_decision(step.feature_string, DIRECTIONS[-step.direction + DIRECTION_OFFSET])
+
+    print_possibility()
+
+    bayesian.export('bayesiantest.yaml')
+
+    bayesian.load('bayesiantest.yaml')
+
+    print_possibility()
+
+
+def generate_shuffle_bayesian():
+    for i in range(0, 10000):
+        c = Cube()
+        game = Game(c)
+        game.shuffle(min_step=10, max_step=1024)
+        for step in game.shuffle_steps:
+            bayesian.add_feature_and_decision(step.feature_string, DIRECTIONS[-step.direction + DIRECTION_OFFSET])
+
+        if i % 100 == 0:
+            print i
+
+    bayesian.export('bayesiantest.yaml')
+
+
 def main():
-    test_bayesian()
+    # test_bayesian()
+    # test_shuffle_bayesian()
+    # generate_shuffle_bayesian()
+    bayesian.load('bayesiantest.yaml')
+    print_possibility()
 
 
 if __name__ == '__main__':
